@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-export default function TextButton({ color, title, small, onPress }){
+export default function TextButton({ color, title, small, id, onPress }){
 	return (
 		<TouchableOpacity
 			style={[styles.button, {borderColor: color}]}

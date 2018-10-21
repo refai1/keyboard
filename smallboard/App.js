@@ -4,21 +4,65 @@ import { StyleSheet, Text, View } from 'react-native';
 import TextButton from './components/TextButton';
 
 
-
 export default class App extends React.Component {
     
-    state = {
-        entered: "HI!",
-    };
+    constructor(props) {
+    	super(props);
+    	this.state = {
+    		entered: "",
+    		lastKey: "",
+    		letter_index: 0,
+    		startTime: null,
 
+    	}
 
-    handleAPress = () => {
-        
+    	var letter_index = 0;
+
+    	this.handleAPress = this.handleAPress.bind(this);
+    }
+
+    handleAPress = string => {
+    	var index;
+
+    	const {lastKey, letter_index, entered, startTime} = this.state;
+
+    	var text = entered;
+    	var start = startTime;
+    	index = letter_index;
+
+    	var end = new Date().getTime();
+
+    	var move_on;
+
+    	if (end - start >= 1000){
+    		// Move on to next letter
+    		move_on = true;
+    	} else{
+    		// proceed normally.
+    		move_on = false;
+    	}
+    	
+    	if (string == lastKey && !move_on){
+    		index = (letter_index + 1) % string.length;
+    		text = text.slice(0,-1);
+    		text = text + string[index];
+    	}else{
+    		index = 0;
+    		text = text + string[index];
+    	}
+    	
+
+    	start = new Date().getTime();
+    	
+
         this.setState(prevState => {
             const {entered} = prevState;
 
             return {
-                entered: prevState["entered"] + 'a'
+                entered: text,
+                lastKey: string,
+                letter_index: index,
+                startTime: start,
             };
         });
     };
@@ -26,6 +70,12 @@ export default class App extends React.Component {
 
     render() {
         const {entered} = this.state;
+        
+        var letters = {
+    		ab : "ab"
+    	}
+
+  
         return (
         <View style={styles.container}>
 
@@ -42,27 +92,27 @@ export default class App extends React.Component {
                 <View style={styles.keyboardContainer}>
                     
                     <View style={styles.rowContainer}>
-                        <TextButton small color='#ffffff' title='ab' onPress={this.handleAPress()}/>
-                        <TextButton small color='#ffffff' title='efg'/>
-                        <TextButton small color='#ffffff' title='kl'/>
+                        <TextButton small color='#ffffff' title='ab' id="1" onPress={this.handleAPress.bind(this, "ab")}/>
+                        <TextButton small color='#ffffff' title='efg' onPress={this.handleAPress.bind(this,"efg")}/>
+                        <TextButton small color='#ffffff' title='kl' onPress={this.handleAPress.bind(this,"kl")}/>
                     </View>
 
                     <View style={styles.rowContainer}>
-                        <TextButton small color='#ffffff' title='cd'/>
-                        <TextButton small color='#ffffff' title='hij'/>
-                        <TextButton small color='#ffffff' title='mn'/>
+                        <TextButton small color='#ffffff' title='cd' onPress={this.handleAPress.bind(this,"cd")}/>
+                        <TextButton small color='#ffffff' title='hij' onPress={this.handleAPress.bind(this,"hij")}/>
+                        <TextButton small color='#ffffff' title='mn' onPress={this.handleAPress.bind(this,"mn")}/>
                     </View>
                     
                     <View style={styles.rowContainer}>
-                        <TextButton small color='#ffffff' title='op'/>
-                        <TextButton small color='#ffffff' title='tu'/>
-                        <TextButton small color='#ffffff' title='wx'/>
+                        <TextButton small color='#ffffff' title='op' onPress={this.handleAPress.bind(this,"op")}/>
+                        <TextButton small color='#ffffff' title='tu' onPress={this.handleAPress.bind(this,"tu")}/>
+                        <TextButton small color='#ffffff' title='wx' onPress={this.handleAPress.bind(this,"wx")}/>
                     </View>
                     
                     <View style={styles.rowContainer}>
-                        <TextButton small color='#ffffff' title='qrs'/>
-                        <TextButton small color='#ffffff' title='v'/>
-                        <TextButton small color='#ffffff' title='yz'/>
+                        <TextButton small color='#ffffff' title='qrs' onPress={this.handleAPress.bind(this,"qrs")}/>
+                        <TextButton small color='#ffffff' title='v' onPress={this.handleAPress.bind(this,"v")}/>
+                        <TextButton small color='#ffffff' title='yz' onPress={this.handleAPress.bind(this,"yz")}/>
                     </View>
 
                 </View>
