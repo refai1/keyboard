@@ -5,10 +5,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-export default function TextButton({ color, title, small, id, onPress }){
+export default function TextButton({ color, bcolor, title, small, id, onPress }){
 	return (
 		<TouchableOpacity
-			style={[styles.button, {borderColor: color}]}
+			style={[styles.button, {borderColor: color}, {backgroundColor: bcolor}]}
 			onPress={onPress}
 		>
 			<Text
@@ -38,8 +38,8 @@ TextButton.defaultProps = {
 const styles = StyleSheet.create({
 	button: {
 		marginTop: 5,
-		minWidth: 10,
-		height: 30,
+		width: 45,
+		height: 32,
 		borderWidth: 2,
 		borderRadius: 3,
 	},
